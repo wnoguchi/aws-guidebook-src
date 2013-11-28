@@ -15,5 +15,14 @@ $s3 = S3Client::factory($config);
 
 $res = $s3->createBucket(array(
   'Bucket' => BOOK_BUCKET,
+  // Tokyo Region
+  'LocationConstraint' => \Aws\Common\Enum\Region::AP_NORTHEAST_1,
 ));
+
+if (!empty($res))
+{
+  echo $res["Location"] . "\n";
+  echo $res["RequestId"] . "\n";
+  echo "'" . BOOK_BUCKET . "' bucket created.\n";
+}
 
