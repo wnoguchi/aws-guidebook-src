@@ -1,0 +1,5 @@
+vendor/
+/tmp/
+*~
+.*.sw[a-z]
+
