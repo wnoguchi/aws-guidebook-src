@@ -13,8 +13,22 @@ use Aws\S3\S3Client;
 
 $s3 = S3Client::factory($config);
 
+if ($argc != 2)
+{
+  exit("Argument Error.\n");
+}
+
+if ($argv[1] == '-')
+{
+  $bucket_name = BOOK_BUCKET;
+}
+else
+{
+  $bucket_name = $argv[1];
+}
+
 $res = $s3->createBucket(array(
-  'Bucket' => BOOK_BUCKET,
+  'Bucket' => $bucket_name,
   // Tokyo Region
   'LocationConstraint' => \Aws\Common\Enum\Region::AP_NORTHEAST_1,
 ));
@@ -23,6 +37,6 @@ if (!empty($res))
 {
   echo $res["Location"] . "\n";
   echo $res["RequestId"] . "\n";
-  echo "'" . BOOK_BUCKET . "' bucket created.\n";
+  echo "'" . $bucket_name . "' bucket created.\n";
 }
 
