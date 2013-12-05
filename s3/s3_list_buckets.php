@@ -1,6 +1,6 @@
 <?php
 require_once("vendor/autoload.php");
-require_once("awssecure.inc.php");
+require_once("include/awssecure.inc.php");
 
 use Aws\S3\S3Client;
 

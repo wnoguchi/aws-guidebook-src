@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 // Composer
 require_once('vendor/autoload.php');
 // AWS
-require_once('awssecure.inc.php');
+require_once('include/awssecure.inc.php');
 
 require_once('include/book.inc.php');
 
