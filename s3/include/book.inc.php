@@ -6,7 +6,36 @@ define('BOOK_BUCKET', 'sitepoint-aws-cloud-book-wnoguchi');
  * List All Bucket Objects.
  * Not Limited 1000 objects this function call.
  */
-function getAllBucketObjects($bucket, $prefix = '')
+function getAllBucketObjects($client, $bucket, $prefix = '')
 {
-  // TODO Implement procedure.
+  $objects = array();
+  $next = '';
+
+  do
+  {
+    $result = $s3->listObjects(array (
+      'Bucket' => $bucket,
+      'Marker' => urlencode($next),
+      'prefix' => $prefix,
+    ));
+
+    if (!$result['Contents']) {
+      break;
+    }
+
+    foreach ($result['Contents'] as $obj)
+    {
+      $objects[] = $obj;
+    }
+
+    $isTruncated = $result['IsTruncated'];
+
+    if ($isTruncated) {
+      $next = $objects[count($objects) - 1]['Key']
+    }
+
+  } while ($isTruncated);
+
+  return $objects;
+
 }
