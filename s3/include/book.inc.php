@@ -13,10 +13,10 @@ function getAllBucketObjects($client, $bucket, $prefix = '')
 
   do
   {
-    $result = $s3->listObjects(array (
+    $result = $client->listObjects(array (
       'Bucket' => $bucket,
       'Marker' => urlencode($next),
-      'prefix' => $prefix,
+      'Prefix' => $prefix,
     ));
 
     if (!$result['Contents']) {
@@ -31,7 +31,7 @@ function getAllBucketObjects($client, $bucket, $prefix = '')
     $isTruncated = $result['IsTruncated'];
 
     if ($isTruncated) {
-      $next = $objects[count($objects) - 1]['Key']
+      $next = $objects[count($objects) - 1]['Key'];
     }
 
   } while ($isTruncated);
