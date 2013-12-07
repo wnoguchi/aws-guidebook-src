@@ -1,6 +1,7 @@
 {
   "require": {
-    "aws/aws-sdk-php": "*"
+    "aws/aws-sdk-php": "*",
+    "apache/log4php": "2.3.0"
   }
 }
 

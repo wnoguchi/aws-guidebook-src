@@ -3,8 +3,38 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4ed446d6b445f0c047f7e972acb70a50",
+    "hash": "291fa2da05dee3cd8bc8de93e39bd444",
     "packages": [
+        {
+            "name": "apache/log4php",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git-wip-us.apache.org/repos/asf/logging-log4php.git",
+                "reference": "8c6df2481cd68d0d211d38f700406c5f0a9de0c2"
+            },
+            "require": {
+                "php": ">=5.2.7"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/main/php/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A versatile logging framework for PHP",
+            "homepage": "http://logging.apache.org/log4php/",
+            "keywords": [
+                "log",
+                "logging",
+                "php"
+            ],
+            "time": "2012-10-26 09:13:25"
+        },
         {
             "name": "aws/aws-sdk-php",
             "version": "2.4.11",
@@ -167,17 +197,17 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.3.7",
+            "version": "v2.4.0",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "2d8ece3c610726a73d0c95c885134efea182610e"
+                "reference": "acd1707236f6eb96fbb8d58f63d289b72ebc2f6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/2d8ece3c610726a73d0c95c885134efea182610e",
-                "reference": "2d8ece3c610726a73d0c95c885134efea182610e",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/acd1707236f6eb96fbb8d58f63d289b72ebc2f6e",
+                "reference": "acd1707236f6eb96fbb8d58f63d289b72ebc2f6e",
                 "shasum": ""
             },
             "require": {
@@ -193,7 +223,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -217,7 +247,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2013-10-13 06:32:10"
+            "time": "2013-12-03 14:52:22"
         }
     ],
     "packages-dev": [
