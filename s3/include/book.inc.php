@@ -14,7 +14,7 @@ function getAllBucketObjects($client, $bucket, $prefix = '')
 
   do
   {
-    $log->debug("API Request.");
+//    $log->debug("API Request.");
 
     $result = $client->listObjects(array (
       'Bucket' => $bucket,
@@ -40,7 +40,7 @@ function getAllBucketObjects($client, $bucket, $prefix = '')
 
   } while ($isTruncated);
 
-  $log->debug("Reach End of function.");
+//  $log->debug("Reach End of function.");
 
   return $objects;
 
