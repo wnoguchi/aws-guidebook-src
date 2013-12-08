@@ -54,18 +54,74 @@ function getAllBucketObjects($client, $bucket, $prefix = '')
 function uploadObject($client, $bucket, $key, $data, $acl = CannedAcl::PRIVATE_ACCESS,
                       $contentType = "text/plain")
 {
+  $try = 1;
+  $sleep = 1;
   $result = null;
-  try {
-    $result = $client->putObject(array(
-      'Bucket' => $bucket,
-      'Key' => $key,
-      'Body' => $data,
-      'ACL' => $acl,
-      'ContentType' => $contentType,
-    ));
+  
+  do {
+    try {
+      $result = $client->putObject(array(
+        'Bucket' => $bucket,
+        'Key' => $key,
+        'Body' => $data,
+        'ACL' => $acl,
+        'ContentType' => $contentType,
+      ));
+      
+    } catch (Exception $ex) {
+      echo $ex->toString();
+    }
     
-  } catch (Exception $ex) {
-    echo $ex->toString();
-  }
+    if ($result != null) {
+      break;
+    }
+    
+    sleep($sleep);
+    $sleep = $sleep * 2;
+    
+    $try++;
+    
+  } while ($try);
+  
   return $result;
+}
+
+/**
+ *
+ */
+function guessType($file)
+{
+  $info = pathinfo($file, PATHINFO_EXTENSION);
+  $mimeType = '';
+  
+  switch (strlower($info))
+  {
+    case "jpg":
+    case "jpeg":
+      $mimeType = "image/jpg";
+      break;
+      
+    case "png":
+      $mimeType = "image/png";
+      break;
+      
+    case "gif":
+      $mimeType = "image/gif";
+      break;
+      
+    case "htm":
+    case "html":
+      $mimeType = "text/html";
+      break;
+      
+    case "txt":
+      $mimeType = "text/plain";
+      break;
+      
+    default:
+      $mimeType = "text/plain";
+      break;
+  }
+  
+  return $mimeType;
 }
