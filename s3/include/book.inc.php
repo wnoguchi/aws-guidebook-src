@@ -1,6 +1,8 @@
 <?php
 define('BOOK_BUCKET', 'sitepoint-aws-cloud-book-wnoguchi');
 
+use Aws\S3\Enum\CannedAcl;
+
 /**
  * List All Bucket Objects.
  * Not Limited 1000 objects this function call.
@@ -44,4 +46,26 @@ function getAllBucketObjects($client, $bucket, $prefix = '')
 
   return $objects;
 
+}
+
+/**
+ *
+ */
+function uploadObject($client, $bucket, $key, $data, $acl = CannedAcl::PRIVATE_ACCESS,
+                      $contentType = "text/plain")
+{
+  $result = null;
+  try {
+    $result = $client->putObject(array(
+      'Bucket' => $bucket,
+      'Key' => $key,
+      'Body' => $data,
+      'ACL' => $acl,
+      'ContentType' => $contentType,
+    ));
+    
+  } catch (Exception $ex) {
+    echo $ex->toString();
+  }
+  return $result;
 }
