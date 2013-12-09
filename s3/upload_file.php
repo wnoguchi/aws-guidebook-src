@@ -14,20 +14,30 @@ use Aws\S3\Enum\CannedAcl;
 
 $s3 = S3Client::factory($config);
 
-$bucket = BOOK_BUCKET;
-$filename = "tumblr_mq11gvsdDq1qz53a8o1_500.jpg";
-$key = "/vagrant/$filename";
-$data = file_get_contents($key);
-$contentType = guessType($key);
-
-echo "uploading...\n";
-
-if (($model = uploadObject($s3, $bucket, $key, $data, CannedAcl::PUBLIC_READ, $contentType)) == null)
-{
-  echo "failed to upload $key to $bucket\n";
+if ($argc < 3) {
+  exit("Usage: " . $argv[0] . " bucket files...\n");
 }
-else
+
+$bucket = ($argv[1] == '-') ? BOOK_BUCKET : $argv[1];
+echo "Bucket: $bucket\n";
+
+for ($i = 2; $i < $argc; $i++)
 {
-  $url = $s3->getObjectUrl($bucket, $key);
-  echo "upload successfully $url.\n";
+  $key = $argv[$i];
+  $data = file_get_contents($key);
+  $contentType = guessType($key);
+  
+  echo "uploading...\n";
+  
+  if (($model = uploadObject($s3, $bucket, $key, $data, CannedAcl::PUBLIC_READ, $contentType)) == null)
+  {
+    echo "failed to upload $key to $bucket\n";
+  }
+  else
+  {
+    $url = $s3->getObjectUrl($bucket, $key);
+    echo "upload successfully $url.\n";
+  }
 }
+
+echo "finished.\n";
