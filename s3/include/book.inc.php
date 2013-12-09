@@ -49,7 +49,7 @@ function getAllBucketObjects($client, $bucket, $prefix = '')
 }
 
 /**
- *
+ * Upload Object utility function.
  */
 function uploadObject($client, $bucket, $key, $data, $acl = CannedAcl::PRIVATE_ACCESS,
                       $contentType = "text/plain")
@@ -87,14 +87,14 @@ function uploadObject($client, $bucket, $key, $data, $acl = CannedAcl::PRIVATE_A
 }
 
 /**
- *
+ * Guess MIME Type from file path.
  */
 function guessType($file)
 {
   $info = pathinfo($file, PATHINFO_EXTENSION);
   $mimeType = '';
   
-  switch (strlower($info))
+  switch (strtolower($info))
   {
     case "jpg":
     case "jpeg":
