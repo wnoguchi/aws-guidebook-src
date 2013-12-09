@@ -20,4 +20,14 @@ $key = "/vagrant/$filename";
 $data = file_get_contents($key);
 $contentType = guessType($key);
 
-uploadObject($s3, $bucket, $key, $data, CannedAcl::PUBLIC_READ, $contentType);
+echo "uploading...\n";
+
+if (($model = uploadObject($s3, $bucket, $key, $data, CannedAcl::PUBLIC_READ, $contentType)) == null)
+{
+  echo "failed to upload $key to $bucket\n";
+}
+else
+{
+  $url = $s3->getObjectUrl($bucket, $key);
+  echo "upload successfully $url.\n";
+}
