@@ -29,6 +29,14 @@ $queueUrl = $result->get('QueueUrl');
 while (true) {
   
   // TODO: write codes here.
+  $result = $client->receiveMessage(array(
+    'QueueUrl' => $queueUrl,
+  ));
+  
+  foreach ($result->getPath('Messages/*/Body') as $messageBody) {
+    // Do something with the message
+    echo $messageBody . "\n";
+  }
   break;
   
 }
