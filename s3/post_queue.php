@@ -31,7 +31,7 @@ for ($i = 2; $i < count($argv); $i++)
   try {
     $result = $client->sendMessage(array(
       'QueueUrl'    => $queueUrl,
-      'MessageBody' => 'An awesome message!',
+      'MessageBody' => $message,
     ));
     
     $messageId = $result->get('MessageId');
