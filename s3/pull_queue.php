@@ -31,14 +31,30 @@ while (true) {
   // TODO: write codes here.
   $result = $client->receiveMessage(array(
     'QueueUrl' => $queueUrl,
+    'WaitTimeSeconds' => 1,
   ));
   
-  foreach ($result->getPath('Messages/*/Body') as $messageBody) {
-    // Do something with the message
-    echo $messageBody . "\n";
+  $messages = $result->get('Messages');
+  if (!empty($messages)) {
+
+    foreach ($messages as $message) {
+      // Do something with the message
+      $receiptHandle = $message['ReceiptHandle'];
+      $messageBody = $message['Body'];
+      
+      echo "Message: " . $messageBody . "\n";
+      
+      $client->deleteMessage(array(
+        'QueueUrl' => $queueUrl,
+        'ReceiptHandle' => $receiptHandle,
+      ));
+    }
+
   }
-  break;
+  else
+  {
+    echo "Empty.\n";
+  }
+  
   
 }
-
-echo "finished!\n";
