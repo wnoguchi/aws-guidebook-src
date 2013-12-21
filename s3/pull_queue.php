@@ -28,7 +28,6 @@ $queueUrl = $result->get('QueueUrl');
 
 while (true) {
   
-  // TODO: write codes here.
   $result = $client->receiveMessage(array(
     'QueueUrl' => $queueUrl,
     'WaitTimeSeconds' => 1,
@@ -49,6 +48,7 @@ while (true) {
         'ReceiptHandle' => $receiptHandle,
       ));
     }
+    echo "=========================================\n";
 
   }
   else
