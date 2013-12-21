@@ -125,3 +125,13 @@ function guessType($file)
   
   return $mimeType;
 }
+
+//
+//
+//
+
+define('URL_QUEUE', 'c_url');
+define('PARSE_QUEUE', 'c_parse');
+define('IMAGE_QUEUE', 'c_image');
+define('RENDER_QUEUE', 'c_render');
+
