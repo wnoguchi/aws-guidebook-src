@@ -1,6 +1,8 @@
 <?php
 define('BOOK_BUCKET', 'sitepoint-aws-cloud-book-wnoguchi');
 
+date_default_timezone_set('Asia/Tokyo');
+
 use Aws\S3\Enum\CannedAcl;
 
 /**
@@ -134,4 +136,41 @@ define('URL_QUEUE', 'c_url');
 define('PARSE_QUEUE', 'c_parse');
 define('IMAGE_QUEUE', 'c_image');
 define('RENDER_QUEUE', 'c_render');
+
+function pullMessage($client, $queue)
+{
+  // Get Queue URL
+  $result = $client->createQueue(array(
+    'QueueName' => $queue,
+  ));
+  $queueUrl = $result->get('QueueUrl');
+
+  $result = $client->receiveMessage(array(
+    'QueueUrl' => $queueUrl,
+    'WaitTimeSeconds' => 1,
+  ));
+  
+  $messages = $result->get('Messages');
+  $message = $messages[0];
+  $messageBody = $message['Body'];
+
+  if (empty($messageBody)) {
+    return null;
+  }
+
+  $messageDetail = json_decode($messageBody, true);
+  $receiptHandle = $message['ReceiptHandle'];
+
+  // 返却するオブジェクトを構築
+  $return_object = array(
+    'QueueURL' => $queueUrl,
+    'Timestamp' => date('c'),
+    'Message' => $message,
+    'MessageBody' => $messageBody,
+    'MessageDetail' => $messageDetail,
+    'ReceiptHandle' => $receiptHandle,
+  );
+
+  return $return_object;
+}
 
