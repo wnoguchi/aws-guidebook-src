@@ -24,9 +24,19 @@ $result = $client->createQueue(array(
 ));
 $queueUrl = $result->get('QueueUrl');
 
-for ($i = 1; $i < count($argv); $i++)
+$origin = $argv[0];
+for ($i = 1; $i < $argc; $i++)
 {
-  $message = $argv[$i];
+  // オブジェクトデータ構築
+  $histItem = array("Posted by $origin . at " . date('c'));
+  $url = $argv[$i];
+  $message = array (
+    'Action' => 'FetchPage',
+    'Origin' => $origin,
+    'Data' => $url,
+    'History' => $histItem,
+  );
+  $message = json_encode($message);
   
   try {
     $result = $client->sendMessage(array(
@@ -34,8 +44,8 @@ for ($i = 1; $i < count($argv); $i++)
       'MessageBody' => $message,
     ));
     
-    $messageId = $result->get('MessageId');
-    echo "Posted to $queue ${messageId}: $message\n";
+    //$messageId = $result->get('MessageId');
+    echo "Posted $message to queue " . URL_QUEUE . "\n";
 
   } catch (Exception $ex) {
     exit("Could not post message to " . $queue . ": " . $message . $ex->getMessage() . "\n");
